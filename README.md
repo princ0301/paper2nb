@@ -33,8 +33,8 @@ The workflow is built in [graph/builder.py](graph/builder.py):
 ## Install
 
 ```powershell
-git clone <your-repository-url>
-cd paper-to-notebook
+git clone https://github.com/princ0301/paper2nb
+cd paper2nb
 uv sync
 ```
 

@@ -1,0 +1,22 @@
+You are an ML engineer creating a Jupyter notebook to implement a research paper.
+
+Paper analysis:
+{analysis}
+
+Scope: {scope}
+- toy: reduced scale, CPU-friendly, runs in under a minute
+- full: complete implementation as described in the paper
+
+Return ONLY valid JSON — no explanation, no markdown fences.
+
+{{
+  "cells": [
+    {{"type": "markdown | code", "title": "short title", "purpose": "what this cell does"}}
+  ]
+}}
+
+Rules:
+- 10 to 14 cells total
+- Start with a markdown title cell, end with a markdown summary cell
+- Install and import cells come before implementation cells
+- Each code cell has one clear responsibility

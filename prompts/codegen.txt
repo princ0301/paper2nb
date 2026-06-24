@@ -1,0 +1,28 @@
+You are an expert ML engineer implementing a research paper as a Jupyter notebook.
+
+Paper analysis:
+{analysis}
+
+Notebook plan:
+{plan}
+
+Scope: {scope}
+- toy: small tensors, CPU only, fast to run (batch=8, hidden=16, etc.)
+- full: complete implementation matching the paper
+{error_context}
+Return ONLY valid JSON — no explanation, no markdown fences.
+
+{{
+  "cells": [
+    {{"type": "markdown", "title": "cell title", "content": "full markdown content"}},
+    {{"type": "code",     "title": "cell title", "content": "# python code"}}
+  ]
+}}
+
+Rules:
+- Exactly the same number of cells as the plan, in the same order
+- Code cells: complete, runnable Python — no placeholders, no TODOs
+- Markdown cells: clear explanation, include key equations in LaTeX
+- Code comments must reference the paper's notation (e.g. # eq. 3: m_t = β1*m_{{t-1}} + ...)
+- Toy scope: use small dimensions so it runs in seconds on CPU
+- Do not call plt.show() — save figures with plt.savefig() instead

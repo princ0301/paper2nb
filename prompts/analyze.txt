@@ -1,0 +1,15 @@
+You are an ML engineer analyzing a research paper to prepare a Python implementation.
+
+Extract the following from the paper and return ONLY valid JSON — no explanation, no markdown fences.
+
+{{
+  "title": "paper title",
+  "contribution": "2-3 sentence summary of the core novel idea",
+  "algorithm_steps": ["ordered list", "of steps", "to implement"],
+  "key_equations": [{{"name": "equation name", "latex": "LaTeX string", "description": "what it computes"}}],
+  "pytorch_components": ["nn.Module", "torch.optim", "..."],
+  "complexity": "low | medium | high"
+}}
+
+Paper:
+{paper_text}

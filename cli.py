@@ -35,12 +35,12 @@ def _run_graph(source: str):
         "scope": "toy",
         "cells": [],
         "validation_results": [],
-        "retry_count":        0,
-        "output_path":        "",
-        "status":             "starting",
+        "retry_count": 0,
+        "output_path": "",
+        "status": "starting",
     }
 
-    graph  = build_graph()
+    graph = build_graph()
     config = {"configurable": {"thread_id": str(uuid4())}}
     stream = graph.stream(initial_state, config, stream_mode="updates")
 
@@ -52,10 +52,10 @@ def _run_graph(source: str):
 
         if "__interrupt__" in chunk:
             interrupt_val = chunk["__interrupt__"][0].value
-            checkpoint    = interrupt_val["checkpoint"]
-            data          = interrupt_val["data"]
-            resume_val    = HITL_HANDLERS[checkpoint](data)
-            stream        = graph.stream(Command(resume=resume_val), config, stream_mode="updates")
+            checkpoint = interrupt_val["checkpoint"]
+            data = interrupt_val["data"]
+            resume_val = HITL_HANDLERS[checkpoint](data)
+            stream = graph.stream(Command(resume=resume_val), config, stream_mode="updates")
             continue
 
         for node_name, out in chunk.items():
@@ -63,7 +63,7 @@ def _run_graph(source: str):
 
             if node_name == "validate":
                 passed = sum(1 for r in out.get("validation_results", []) if r["passed"])
-                total  = len(out.get("validation_results", []))
+                total = len(out.get("validation_results", []))
                 retries = out.get("retry_count", 0)
                 console.print(f"  {passed}/{total} cells passed  |  retries: {retries}")
 
@@ -96,17 +96,17 @@ def providers():
     table.add_column("Status")
 
     configs = {
-        "anthropic":  (settings.anthropic_model,  bool(settings.anthropic_api_key)),
-        "openai":     (settings.openai_model,      bool(settings.openai_api_key)),
-        "google":     (settings.google_model,      bool(settings.google_api_key)),
-        "openrouter": (settings.openrouter_model,  bool(settings.openrouter_api_key)),
-        "ollama":     (f"{settings.ollama_model} ({settings.ollama_base_url})", True),
+        "anthropic": (settings.anthropic_model, bool(settings.anthropic_api_key)),
+        "openai": (settings.openai_model, bool(settings.openai_api_key)),
+        "google": (settings.google_model, bool(settings.google_api_key)),
+        "openrouter": (settings.openrouter_model, bool(settings.openrouter_api_key)),
+        "ollama": (f"{settings.ollama_model} ({settings.ollama_base_url})", True),
     }
 
     for name, (model, ready) in configs.items():
         active = name == settings.llm_provider
         status = "[green]active[/green]" if active else ("[dim]ready[/dim]" if ready else "[dim]no key[/dim]")
-        label  = f"[bold]{name}[/bold]" if active else name
+        label = f"[bold]{name}[/bold]" if active else name
         table.add_row(label, model, status)
 
     console.print(table)
@@ -116,14 +116,14 @@ def providers():
 def config():
     """Show current configuration."""
     table = Table(box=box.SIMPLE, show_header=False)
-    table.add_column("key",   style="dim")
+    table.add_column("key", style="dim")
     table.add_column("value", style="bold green")
 
-    table.add_row("provider",    settings.llm_provider)
-    table.add_row("model",       settings.active_model)
-    table.add_row("output_dir",  settings.output_dir)
+    table.add_row("provider", settings.llm_provider)
+    table.add_row("model", settings.active_model)
+    table.add_row("output_dir", settings.output_dir)
     table.add_row("max_retries", str(settings.max_validation_retries))
-    table.add_row("langsmith",   str(settings.langchain_tracing_v2))
+    table.add_row("langsmith", str(settings.langchain_tracing_v2))
 
     console.print(table)
 
